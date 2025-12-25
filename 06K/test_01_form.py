@@ -24,7 +24,7 @@ def test_form():
     
     # Ждем появления красного подсвечивания у Zip code
     wait = WebDriverWait(driver, 10)
-    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#zip-code.danger")))
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#zip-code.alert-danger")))
     
     # Проверяем Zip code (красный)
     assert "danger" in driver.find_element(By.ID, "zip-code").get_attribute("class")

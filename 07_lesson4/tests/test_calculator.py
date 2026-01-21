@@ -3,7 +3,7 @@ import os
 import time
 from selenium import webdriver
 
-# Add parent directory to Python path for imports
+# Add parent directory to Python path for import
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
@@ -12,16 +12,7 @@ from pages.calculator_page import CalculatorPage
 
 
 def test_calculator_with_delay():
-    """
-    Test calculator functionality with 45 seconds delay.
     
-    Steps:
-    1. Open calculator page
-    2. Set delay to 45 seconds
-    3. Calculate 7 + 8
-    4. Wait for result
-    5. Assert result equals 15
-    """
     driver = None
     try:
         # 1. Create Chrome driver

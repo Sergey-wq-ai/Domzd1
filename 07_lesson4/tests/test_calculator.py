@@ -1,75 +1,63 @@
 import sys
 import os
+import time
+from selenium import webdriver
 
-# Добавляем родительскую папку в путь Python
+# Add parent directory to Python path for imports
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
-# Теперь импортируем
-try:
-    from pages.calculator_page import CalculatorPage
-    print("✓ Импорт CalculatorPage успешен")
-except ImportError as e:
-    print(f"✗ Ошибка импорта: {e}")
-    # Покажем где ищем
-    print(f"Текущая папка: {current_dir}")
-    print(f"Родительская папка: {parent_dir}")
-    print(f"sys.path: {sys.path}")
-    exit(1)
+from pages.calculator_page import CalculatorPage
 
-from selenium import webdriver
-import time
 
-print("=== ТЕСТ КАЛЬКУЛЯТОРА ===")
-
-try:
-    # 1. Создаем драйвер
-    print("1. Запускаем Chrome...")
-    driver = webdriver.Chrome()
+def test_calculator_with_delay():
+    """
+    Test calculator functionality with 45 seconds delay.
     
-    # 2. Создаем объект страницы
-    print("2. Создаем CalculatorPage...")
-    calculator = CalculatorPage(driver)
-    
-    # 3. Открываем страницу
-    print("3. Открываем страницу калькулятора...")
-    driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
-    
-    # 4. Устанавливаем задержку
-    print("4. Устанавливаем задержку 3 секунды...")
-    calculator.set_delay(3)
-    
-    # 5. Нажимаем кнопки 7 + 8 =
-    print("5. Вычисляем 7 + 8...")
-    calculator.click_button('7')
-    calculator.click_button('+')
-    calculator.click_button('8')
-    calculator.click_button('=')
-    
-    # 6. Ждем результат
-    print("6. Ждем результат (5 секунд)...")
-    time.sleep(5)
-    
-    # 7. Получаем результат
-    result = calculator.get_result()
-    print(f"7. Результат: {result}")
-    
-    # 8. Проверяем
-    if result == "15":
-        print("✓ ТЕСТ ПРОЙДЕН! Результат верный: 15")
-    else:
-        print(f"✗ ТЕСТ НЕ ПРОЙДЕН! Ожидалось 15, получено {result}")
-        
-except Exception as e:
-    print(f"✗ Ошибка: {e}")
-    import traceback
-    traceback.print_exc()
-    
-finally:
-    # 9. Закрываем браузер
+    Steps:
+    1. Open calculator page
+    2. Set delay to 45 seconds
+    3. Calculate 7 + 8
+    4. Wait for result
+    5. Assert result equals 15
+    """
+    driver = None
     try:
-        driver.quit()
-        print("✓ Браузер закрыт")
-    except:
-        pass
+        # 1. Create Chrome driver
+        driver = webdriver.Chrome()
+        
+        # 2. Create page object
+        calculator = CalculatorPage(driver)
+        
+        # 3. Open calculator page
+        driver.get(
+            "https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html"
+        )
+        
+        # 4. Set delay to 45 seconds
+        calculator.set_delay(45)
+        
+        # 5. Click buttons: 7 + 8 =
+        calculator.click_button('7')
+        calculator.click_button('+')
+        calculator.click_button('8')
+        calculator.click_button('=')
+        
+        # 6. Wait for result (45 seconds + buffer)
+        time.sleep(46)
+        
+        # 7. Get result
+        result = calculator.get_result()
+        
+        # 8. Assert expected result
+        assert result == "15", f"Expected 15, but got {result}"
+        
+    finally:
+        # 9. Close browser
+        if driver:
+            driver.quit()
+
+
+if __name__ == "__main__":
+    test_calculator_with_delay()

@@ -12,16 +12,7 @@ from pages.calculator_page import CalculatorPage
 
 
 def test_calculator_with_delay():
-    """
-    Test calculator functionality with 45 seconds delay.
     
-    Steps:
-    1. Open calculator page
-    2. Set delay to 45 seconds
-    3. Calculate 7 + 8
-    4. Wait for result
-    5. Assert result equals 15
-    """
     driver = None
     try:
         # 1. Create Chrome driver

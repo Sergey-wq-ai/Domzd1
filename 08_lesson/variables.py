@@ -1,0 +1,3 @@
+YOUGILE_API_URL="https://ru.yougile.com/api-v2/projects"
+YOUGILE_API_KEY= "Bearer -FidMAdd64tfuYMfjcKtX9S-NDbUOm2Km2VTQv0ExOsOU6I7rGHh9doYl71cESLVS"
+PROJECT_ID = "c4490052-50d6-41c3-9034-1e770862485d"
